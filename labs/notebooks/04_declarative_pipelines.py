@@ -131,11 +131,11 @@ ORDER BY timestamp DESC
 # MAGIC 3. You need full change history of customer addresses. A) `AUTO CDC ... STORED AS SCD TYPE 1` B) `AUTO CDC ... STORED AS SCD TYPE 2` C) `MERGE INTO` with `WHEN MATCHED UPDATE` D) `INSERT OVERWRITE`
 # MAGIC 4. A pipeline's old name in documentation is: A) Delta Engine B) Delta Live Tables C) Workflows D) Unity Pipelines
 # MAGIC
-# MAGIC ### See hidden cell for answers
+# MAGIC ### print solution in cell below
 
 # COMMAND ----------
 
-# 1 C · 2 B · 3 B · 4 B
+print(answers["04_declarative_pipelines"]["Q1"])
 
 # COMMAND ----------
 

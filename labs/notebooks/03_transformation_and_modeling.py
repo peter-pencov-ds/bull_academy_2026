@@ -295,11 +295,11 @@ display(spark.sql("DESCRIBE HISTORY gold_daily_sales").select("version", "timest
 # MAGIC 3. A BI dashboard runs the same heavy aggregation 200 times a day on data that changes hourly. Best gold object? A) View B) Temp view C) Materialized view D) External table
 # MAGIC 4. `approx_count_distinct` is preferred over `countDistinct` when: A) exact counts are legally required B) data is huge and ~5% error is acceptable C) the column has nulls D) never
 # MAGIC
-# MAGIC ### See hidden cell for answers
+# MAGIC ### print solution in cell below
 
 # COMMAND ----------
 
-# 1 B · 2 B · 3 C · 4 B
+print(answers["03_transformation_and_modeling"]["Q1"])
 
 # COMMAND ----------
 

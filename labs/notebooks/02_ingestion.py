@@ -259,11 +259,11 @@ display(order_lines.limit(10))
 # MAGIC 3. In `addNewColumns` mode, a new column appears. What does the stream do? A) Silently drops the column B) Stops with an exception after updating the schema; restart picks it up C) Writes it to `_rescued_data` forever D) Fails permanently
 # MAGIC 4. Which column can you select to get the source file of each row? A) `input_file()` B) `_metadata.file_path` C) `_source` D) `cloudFiles.path`
 # MAGIC
-# MAGIC ### See hidden cell for answers
+# MAGIC ### print solution in cell below
 
 # COMMAND ----------
 
-# 1 C · 2 B · 3 B · 4 B
+print(answers["02_ingestion"]["Q1"])
 
 # COMMAND ----------
 

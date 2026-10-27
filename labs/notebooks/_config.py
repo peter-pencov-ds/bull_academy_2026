@@ -1,4 +1,8 @@
 # Databricks notebook source
+# /// script
+# [tool.databricks.environment]
+# environment_version = "6"
+# ///
 # MAGIC %md
 # MAGIC # Shared lab configuration
 # MAGIC
@@ -8,6 +12,14 @@
 # MAGIC 3. Exposes Python variables `catalog`, `schema`, `landing`, `checkpoints` to the calling notebook.
 # MAGIC
 # MAGIC You never need to edit this notebook; change the widgets at the top of the calling notebook instead.
+
+# COMMAND ----------
+
+# DBTITLE 1,Import answers
+# Import answers
+import os, sys
+sys.path.append(os.path.abspath(".."))
+from answers import *
 
 # COMMAND ----------
 

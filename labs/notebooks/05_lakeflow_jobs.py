@@ -119,8 +119,8 @@ display(spark.table("job_run_log").orderBy("logged_at", ascending=False))
 # MAGIC 3. How does a downstream task read `bad_rows` set by task `validate`? A) `spark.conf.get` B) `{{tasks.validate.values.bad_rows}}` / `dbutils.jobs.taskValues.get` C) A global temp view D) Environment variable
 # MAGIC 4. Another team's table `sales.gold.orders` is refreshed at unpredictable times. Your job must run after each refresh. Trigger? A) Cron every 5 min B) Table update C) File arrival D) Continuous
 # MAGIC
-# MAGIC ### See hidden cell for answers
+# MAGIC ### print solution in cell below
 
 # COMMAND ----------
 
-# 1 B · 2 B · 3 B · 4 B
+print(answers["05_lakeflow_jobs"]["Q1"])

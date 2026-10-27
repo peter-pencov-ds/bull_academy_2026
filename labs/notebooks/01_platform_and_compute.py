@@ -1,4 +1,8 @@
 # Databricks notebook source
+# /// script
+# [tool.databricks.environment]
+# environment_version = "6"
+# ///
 # MAGIC %md
 # MAGIC # 01 · The Data Intelligence Platform and compute
 # MAGIC
@@ -128,25 +132,11 @@ print(f"{n} zips, took {time.time() - t0:.2f}s")
 # MAGIC
 # MAGIC *Your answers:*
 # MAGIC
-# MAGIC ### See hidden cell for answers
+# MAGIC ### print solution in cell below
 
 # COMMAND ----------
 
-# 1. Job compute
-
-# A nightly job rebuilding gold tables from 200 GB of silver data is a scheduled production ETL workload, so job compute is appropriate for running the workload independently and shutting down when it finishes.
-
-# 2. All-purpose (classic)
-
-# Three analysts exploring data in notebooks all afternoon need interactive, shared compute that stays available while they work, making all-purpose compute a suitable choice.
-
-# 3. SQL warehouse
-
-# A Power BI dashboard refreshed every 15 minutes runs SQL queries against Databricks, so a SQL warehouse is designed for this BI workload and can serve dashboard queries efficiently.
-
-# 4. Serverless
-
-# A pipeline that must start within seconds when a file arrives benefits from serverless compute's fast startup and reduced infrastructure management, provided the pipeline supports the required file-arrival trigger.
+print(answers["01_platform_and_compute"]["Q1"])
 
 # COMMAND ----------
 
@@ -168,11 +158,11 @@ print(f"{n} zips, took {time.time() - t0:.2f}s")
 # MAGIC 2. Which statement triggers Spark to execute a job? A) `df.filter(...)` B) `df.select(...)` C) `df.count()` D) `df.withColumn(...)`
 # MAGIC 3. A scheduled production ETL job should usually run on: A) all-purpose cluster B) job compute or serverless jobs C) SQL warehouse D) driver-only cluster
 # MAGIC
-# MAGIC ### See hidden cell for answers
+# MAGIC ### print solution in cell below
 
 # COMMAND ----------
 
-# 1 B · 2 C · 3 B
+print(answers["01_platform_and_compute"]["Q2"])
 
 # COMMAND ----------
 

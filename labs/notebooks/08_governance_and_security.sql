@@ -216,11 +216,12 @@ LIMIT 50;
 -- MAGIC 3. Analysts must see only rows for their own country, in every tool. Best feature? A) A view per country B) A row filter function C) A column mask D) Separate catalogs
 -- MAGIC 4. Hundreds of tables have e-mail columns that must be masked, including future tables. Best approach? A) `ALTER COLUMN ... SET MASK` on each B) ABAC policy on tagged columns C) Views D) Delta Sharing
 -- MAGIC
--- MAGIC ### See hidden cell for answers
+-- MAGIC ### print solution in cell below
 
 -- COMMAND ----------
 
--- 1 B · 2 B · 3 B · 4 B
+-- MAGIC %python
+-- MAGIC print(answers["08_governance_and_security"]["Q1"])
 
 -- COMMAND ----------
 
