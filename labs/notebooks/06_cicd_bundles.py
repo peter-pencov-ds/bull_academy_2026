@@ -138,7 +138,11 @@ display(spark.sql(f"SHOW SCHEMAS IN {catalog} LIKE '{schema}*'"))
 # MAGIC 3. In `mode: development`, a job with a schedule is deployed. The schedule is: A) active B) paused C) deleted D) converted to file arrival
 # MAGIC 4. A production job should run as: A) the engineer who deployed it B) a service principal C) the workspace admin D) any account user
 # MAGIC
-# MAGIC <details><summary>Answers</summary>1 B · 2 B · 3 B · 4 B</details>
+# MAGIC ### See hidden cell for answers
+
+# COMMAND ----------
+
+# 1 B · 2 B · 3 B · 4 B
 
 # COMMAND ----------
 
