@@ -1,4 +1,8 @@
 # Databricks notebook source
+# /// script
+# [tool.databricks.environment]
+# environment_version = "6"
+# ///
 # MAGIC %md
 # MAGIC # 99 · Cleanup
 # MAGIC Drops **everything** in your lab schemas (tables, views, volumes incl. landing files and checkpoints) so you can restart from `00_setup`.
