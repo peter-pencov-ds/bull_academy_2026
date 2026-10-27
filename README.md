@@ -53,8 +53,8 @@ Expected results mentors can check against: `silver_customers` = 540 rows; in th
 **Each intern:**
 1. **Workspace → Create → Git folder** and clone this repository: https://github.com/peter-pencov-ds/bull_academy_2026.
 2. Create your own branch (feature_{your_name}). You will work on this branch until lab 06. Do not make pull requests to master from this branch.
-2. Open `notebooks/00_setup` and run all. Note the schema it prints.
-3. Work through the notebooks in order. Each one says what must already have run.
+3. Open `notebooks/00_setup` and run all. Note the schema it prints.
+4. Work through the notebooks in order. Each one says what must already have run.
 
 **Deploying the bundle (notebook 06):**
 ```bash
