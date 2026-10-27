@@ -21,6 +21,14 @@
 -- MAGIC dbutils.widgets.text("catalog", "interns")
 -- MAGIC dbutils.widgets.text("schema", "")
 -- MAGIC dbutils.widgets.text("buddy", "", "Buddy's e-mail")
+-- MAGIC
+-- MAGIC catalog = dbutils.widgets.get("catalog")
+-- MAGIC schema = dbutils.widgets.get("schema")
+-- MAGIC buddy = dbutils.widgets.get("buddy")
+-- MAGIC
+-- MAGIC print(catalog)
+-- MAGIC print(schema)
+-- MAGIC print(buddy)
 
 -- COMMAND ----------
 
@@ -155,7 +163,7 @@ GROUP BY region;
 -- MAGIC %md
 -- MAGIC ### Exercise D1
 -- MAGIC Replace the hard-coded `'EU'` with a **mapping table** `region_access(group_name STRING, region STRING)` so that members of
--- MAGIC `interns_analysts` see `NA` rows and admins see everything. Grant your buddy `SELECT` and confirm what they see.
+-- MAGIC `users` see `NA` rows and admins see everything. Grant your buddy `SELECT` and confirm what they see.
 -- MAGIC (They don't need `EXECUTE` on the function or `SELECT` on `region_access`: filters and masks run with the function owner's rights.)
 -- MAGIC
 -- MAGIC Hint: a row filter function can query a table: `EXISTS (SELECT 1 FROM region_access a WHERE a.region = region AND is_account_group_member(a.group_name))`.
@@ -225,7 +233,7 @@ LIMIT 50;
 
 -- SOLUTION — D1
 CREATE OR REPLACE TABLE region_access (group_name STRING, region STRING);
-INSERT INTO region_access VALUES ('interns_analysts', 'NA');
+INSERT INTO region_access VALUES ('users', 'NA');
 
 CREATE OR REPLACE FUNCTION region_by_group(r STRING)
 RETURN is_account_group_member('admins')
