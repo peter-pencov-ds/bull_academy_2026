@@ -1,4 +1,8 @@
 # Databricks notebook source
+# /// script
+# [tool.databricks.environment]
+# environment_version = "6"
+# ///
 # MAGIC %md
 # MAGIC # 06 · CI/CD with Git folders and Declarative Automation Bundles
 # MAGIC
@@ -89,6 +93,10 @@
 # MAGIC - overrides `schema` to `<your schema>_qa` and `batch` to `"2"`.
 # MAGIC
 # MAGIC Create the landing volume for it (next cell), deploy with `databricks bundle deploy -t qa`, run it, and confirm the two deployments write to different schemas.
+# MAGIC
+# MAGIC If you get an error when running: `databricks bundle deploy -t qa`:
+# MAGIC
+# MAGIC Maybe you need to delete something manually before running the deployment in qa ?
 
 # COMMAND ----------
 
@@ -138,7 +146,10 @@ display(spark.sql(f"SHOW SCHEMAS IN {catalog} LIKE '{schema}*'"))
 # MAGIC 3. In `mode: development`, a job with a schedule is deployed. The schedule is: A) active B) paused C) deleted D) converted to file arrival
 # MAGIC 4. A production job should run as: A) the engineer who deployed it B) a service principal C) the workspace admin D) any account user
 # MAGIC
-# MAGIC <details><summary>Answers</summary>1 B · 2 B · 3 B · 4 B</details>
+
+# COMMAND ----------
+
+# 1 B · 2 B · 3 B · 4 B
 
 # COMMAND ----------
 
