@@ -1,0 +1,77 @@
+resources:
+  jobs:
+    northwind_job:
+      name: northwind_job
+
+      # Data-driven trigger: start when new files land. Paused automatically in dev mode.
+      trigger:
+        pause_status: UNPAUSED
+        file_arrival:
+          url: /Volumes/${var.catalog}/${var.schema}/landing/orders/
+
+      email_notifications:
+        on_failure:
+          - ${var.notify_email}
+
+      max_concurrent_runs: 1
+      timeout_seconds: 3600
+
+      # Job-level parameters are pushed down to every notebook task as widgets.
+      parameters:
+        - name: catalog
+          default: ${var.catalog}
+        - name: schema
+          default: ${var.schema}
+        - name: pipeline_schema
+          default: ${resources.schemas.lakeflow_schema.name}
+
+      tasks:
+        - task_key: land_files
+          notebook_task:
+            notebook_path: ../notebooks/05_tasks/land_batch.py
+            base_parameters:
+              batch: ${var.batch}
+
+        - task_key: refresh_pipeline
+          depends_on:
+            - task_key: land_files
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.northwind_pipeline.id}
+
+        - task_key: validate
+          depends_on:
+            - task_key: refresh_pipeline
+          max_retries: 2
+          min_retry_interval_millis: 30000
+          retry_on_timeout: true
+          notebook_task:
+            notebook_path: ../notebooks/05_tasks/validate.py
+            base_parameters:
+              simulate_flaky: "false"
+
+        - task_key: check_quality
+          depends_on:
+            - task_key: validate
+          condition_task:
+            op: GREATER_THAN
+            left: "{{tasks.validate.values.bad_rows}}"
+            right: "0"
+
+        - task_key: quarantine_report
+          depends_on:
+            - task_key: check_quality
+              outcome: "true"
+          notebook_task:
+            notebook_path: ../notebooks/05_tasks/quarantine_report.py
+
+        - task_key: publish
+          depends_on:
+            - task_key: check_quality
+              outcome: "false"
+            - task_key: quarantine_report
+          run_if: AT_LEAST_ONE_SUCCESS
+          notebook_task:
+            notebook_path: ../notebooks/05_tasks/publish.py
+            base_parameters:
+              run_id: "{{job.run_id}}"
+              run_started: "{{job.start_time.iso_datetime}}"

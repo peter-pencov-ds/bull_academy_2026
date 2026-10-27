@@ -1,0 +1,19 @@
+resources:
+  schemas:
+    lakeflow_schema:
+      catalog_name: ${var.catalog}
+      name: ${var.schema}_lakeflow
+      comment: Tables published by the Northwind declarative pipeline
+
+  pipelines:
+    northwind_pipeline:
+      name: northwind_pipeline
+      catalog: ${var.catalog}
+      schema: ${resources.schemas.lakeflow_schema.name}
+      serverless: true
+      channel: CURRENT
+      libraries:
+        - file:
+            path: ../pipeline/northwind_pipeline.sql
+      configuration:
+        source_path: /Volumes/${var.catalog}/${var.schema}/landing

@@ -1,0 +1,62 @@
+# Declarative Automation Bundle (formerly Databricks Asset Bundle)
+# Deploys the Northwind pipeline and orchestration job.
+#
+#   databricks bundle validate                 # check config, resolve variables
+#   databricks bundle deploy                   # deploy to the default target (dev)
+#   databricks bundle run northwind_job        # run the job
+#   databricks bundle deploy -t prod           # promote the same code to prod
+#   databricks bundle destroy                  # remove everything this bundle created
+
+bundle:
+  name: northwind_labs
+
+include:
+  - resources/*.yml
+
+variables:
+  catalog:
+    description: Unity Catalog catalog for all lab objects
+    default: interns
+  schema:
+    description: Schema that holds the landing volume (your notebook schema, usually your user name)
+  batch:
+    description: Which generated batch the job lands on each run (1, 2 or 3)
+    default: "1"
+  ci_service_principal:
+    description: Application ID of the service principal that owns staging/prod deployments
+    default: "00000000-0000-0000-0000-000000000000"
+  notify_email:
+    description: Who gets failure e-mails
+    default: ${workspace.current_user.userName}
+
+targets:
+  dev:
+    # development mode: resources are prefixed "[dev <you>]", schedules are paused,
+    # each developer gets their own copy, pipelines run in development mode.
+    mode: development
+    default: true
+    variables:
+      # must match the schema 00_setup printed; override with --var="schema=..." if it differs
+      schema: ${workspace.current_user.short_name}
+    # workspace:
+    #   host: https://<your-workspace>.cloud.databricks.com
+
+  staging:
+    mode: production
+    workspace:
+      root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      schema: northwind_staging
+    run_as:
+      # in CI, deploy as a service principal, never as a person
+      service_principal_name: ${var.ci_service_principal}
+
+  prod:
+    mode: production
+    workspace:
+      root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      schema: northwind_prod
+      batch: "3"
+    run_as:
+      service_principal_name: ${var.ci_service_principal}
