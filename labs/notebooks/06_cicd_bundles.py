@@ -24,7 +24,7 @@
 # MAGIC ## Part A — Git folders (30 min)
 # MAGIC This repo is already a Git folder in your workspace (you cloned it in week 1).
 # MAGIC 1. Click the **branch name** at the top of this notebook → **Create branch** `feature/<you>-bundle-lab`.
-# MAGIC 2. Edit `resources/job.yml`: change `timeout_seconds` to `5400`.
+# MAGIC 2. Edit `resources/job.yml`: change `timeout_seconds` to a value between 5000 and 6000.
 # MAGIC 3. In the Git dialog: review the diff → write a commit message → **Commit & Push**.
 # MAGIC 4. Open the pull request in your Git provider. Ask your buddy to review it.
 # MAGIC
