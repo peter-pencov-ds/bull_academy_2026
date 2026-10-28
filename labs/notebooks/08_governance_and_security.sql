@@ -21,7 +21,10 @@
 -- MAGIC dbutils.widgets.text("catalog", "interns")
 -- MAGIC dbutils.widgets.text("schema", "")
 -- MAGIC dbutils.widgets.text("buddy", "", "Buddy's e-mail")
--- MAGIC
+
+-- COMMAND ----------
+
+-- MAGIC %python
 -- MAGIC catalog = dbutils.widgets.get("catalog")
 -- MAGIC schema = dbutils.widgets.get("schema")
 -- MAGIC buddy = dbutils.widgets.get("buddy")
@@ -188,7 +191,7 @@ GROUP BY region;
 
 -- COMMAND ----------
 
-ALTER TABLE gold_customer_contacts ALTER COLUMN email SET TAGS ('pii' = 'email');
+ALTER TABLE gold_customer_contacts ALTER COLUMN email SET TAGS ('sensitive_data' = 'email');
 SELECT * FROM information_schema.column_tags WHERE table_name = 'gold_customer_contacts';
 
 -- COMMAND ----------
