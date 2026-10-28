@@ -69,7 +69,7 @@
 
 # MAGIC %md
 # MAGIC ## Part C — Deploy with the CLI (60 min)
-# MAGIC Use the **web terminal** (attach to a cluster → Terminal) or your laptop with the [Databricks CLI](https://docs.databricks.com/dev-tools/cli/install.html) installed
+# MAGIC Use the **web terminal** (click on the branch at the top of this notebook, click on web terminal in the top right corner). Or on your laptop with the [Databricks CLI](https://docs.databricks.com/dev-tools/cli/install.html) installed
 # MAGIC and authenticated (`databricks auth login --host <workspace-url>`). Run from the repo root:
 # MAGIC
 # MAGIC ```bash

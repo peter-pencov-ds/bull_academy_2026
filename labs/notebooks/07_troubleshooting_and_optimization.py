@@ -14,7 +14,7 @@
 # MAGIC - Diagnose out-of-memory errors, cluster start failures and library conflicts
 # MAGIC - Fix the small-files problem and apply Liquid Clustering / predictive optimization
 # MAGIC
-# MAGIC > **Compute:** run this notebook on a **classic all-purpose cluster** (single user, 1 driver + 2 small workers).
+# MAGIC > **Compute:** run this notebook on a **classic all-purpose cluster** (Academy Cluster).
 # MAGIC > Serverless hides the Spark UI and won't let you change the configs we break on purpose.
 
 # COMMAND ----------
@@ -89,7 +89,6 @@ skewed.write.mode("overwrite").saveAsTable("tmp_skew_result")
 # TODO — 1c
 spark.conf.unset("spark.sql.autoBroadcastJoinThreshold")
 
-
 # COMMAND ----------
 
 # MAGIC %md
@@ -101,11 +100,13 @@ spark.conf.unset("spark.sql.autoBroadcastJoinThreshold")
 spark.conf.set("spark.sql.adaptive.enabled", "false")
 spark.conf.set("spark.sql.shuffle.partitions", "2")
 
-(spark.range(50_000_000)
+sample = (spark.range(50_000_000)
  .withColumn("k", (F.col("id") % 5_000_000))
  .withColumn("payload", F.sha2(F.col("id").cast("string"), 256))
  .groupBy("k").agg(F.max("payload").alias("p"), F.count("*").alias("n"))
- .write.mode("overwrite").saveAsTable("tmp_spill_result"))
+ )
+
+sample.write.mode("overwrite").saveAsTable("tmp_spill_result")
 
 # COMMAND ----------
 
@@ -122,7 +123,7 @@ spark.conf.unset("spark.sql.shuffle.partitions")
 # MAGIC %md
 # MAGIC ## Lab 3 — Driver out-of-memory (15 min, read before running!)
 # MAGIC The next cell pulls 30 M rows onto the driver. On a small cluster it will fail or restart the driver. **That's the point.**
-# MAGIC Read the error message, then find the driver restart in *Compute → Event log*.
+# MAGIC Read the error message, then find the driver restart in *Compute → Event log*. Or if the job failed, open the jobs in spark UI and find the failure reason
 
 # COMMAND ----------
 
@@ -203,12 +204,6 @@ display(spark.sql(f"DESCRIBE SCHEMA EXTENDED {catalog}.{schema}"))
 # MAGIC %md
 # MAGIC ## Lab 6 — Broken job clinic (mentor-led, 45 min)
 # MAGIC Your mentor deploys a copy of the job with three seeded faults. For each: find it, fix it, and write a 3-line root-cause note (symptom → cause → fix).
-# MAGIC
-# MAGIC | # | Seeded fault (mentor eyes only) | Where interns should find it |
-# MAGIC | --- | --- | --- |
-# MAGIC | 1 | `validate` reads `pipeline_schema = wrong_schema` | Task output: `TABLE_OR_VIEW_NOT_FOUND` |
-# MAGIC | 2 | Classic job cluster with a library pinned to an incompatible version (e.g. `pandas==1.0.0`) | Task error + cluster *Libraries* tab |
-# MAGIC | 3 | `simulate_flaky = true` with `max_retries: 0` | Failed run → *Repair run* fixes it |
 
 # COMMAND ----------
 
